@@ -3,7 +3,7 @@ package br.sp.fatec.api.dw.model;
 import lombok.Data;
 
 import javax.persistence.*;
-/*MANY TO ONE USUARIO*/
+import java.util.List;
 
 @Data
 @Entity
@@ -17,4 +17,8 @@ public class CargoModel {
 
     @Column(name = "car_descricao",nullable = false,unique = true,length = 50)
     private String descricao;
+
+    @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY)
+    private List<UsuarioModel> usuarios;
+
 }
