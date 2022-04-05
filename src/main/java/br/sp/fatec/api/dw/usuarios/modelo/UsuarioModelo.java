@@ -1,5 +1,7 @@
-package br.sp.fatec.api.dw.model;
+package br.sp.fatec.api.dw.usuarios.modelo;
 
+import br.sp.fatec.api.dw.cargo.CargoModel;
+import br.sp.fatec.api.dw.carteira.CarteiraModel;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "Usuario")
-public class UsuarioModel {
+public class UsuarioModelo {
 
     @Id
     @Column(name = "usu_email",length = 80)
