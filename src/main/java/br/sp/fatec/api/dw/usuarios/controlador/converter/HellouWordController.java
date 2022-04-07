@@ -13,6 +13,7 @@ public class HellouWordController {
     @GetMapping
     public ResponseEntity<String> hellouword(){
 
+        System.out.println("Ola");
         return new ResponseEntity<>("Ola", HttpStatus.OK);
     }
 }
