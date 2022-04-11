@@ -11,6 +11,7 @@ import java.util.List;
 
 @RequestMapping("/usuarios")
 @RestController
+@CrossOrigin
 public class UsuarioControlador {
 
 
@@ -23,9 +24,9 @@ public class UsuarioControlador {
 
 
     @GetMapping
-    public ResponseEntity<UsuarioModelo> listaUsuarios(){
+    public ResponseEntity<List<UsuarioModelo>> listaUsuarios(){
         List<UsuarioModelo> users = service.listaUsuarios();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping
