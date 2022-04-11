@@ -1,5 +1,6 @@
-package br.sp.fatec.api.dw.model;
+package br.sp.fatec.api.dw.cargo;
 
+import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,6 @@ public class CargoModel {
     private String descricao;
 
     @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY)
-    private List<UsuarioModel> usuarios;
+    private List<UsuarioModelo> usuarios;
 
 }

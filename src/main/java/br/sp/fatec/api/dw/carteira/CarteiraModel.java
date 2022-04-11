@@ -1,5 +1,6 @@
-package br.sp.fatec.api.dw.model;
+package br.sp.fatec.api.dw.carteira;
 
+import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,5 +20,5 @@ public class CarteiraModel {
     private String descricao;
 
     @OneToMany(mappedBy = "carteira", fetch = FetchType.LAZY)
-    private List<UsuarioModel> usuarios;
+    private List<UsuarioModelo> usuarios;
 }
