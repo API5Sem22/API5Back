@@ -1,6 +1,6 @@
 package br.sp.fatec.api.dw.usuarios.modelo;
 
-import br.sp.fatec.api.dw.cargo.CargoModel;
+import br.sp.fatec.api.dw.cargo.modelo.CargoModelo;
 import br.sp.fatec.api.dw.carteira.CarteiraModel;
 import lombok.Data;
 
@@ -26,7 +26,7 @@ public class UsuarioModelo {
 
     @ManyToOne
     @JoinColumn(name = "car_id")
-    private CargoModel cargo;
+    private CargoModelo cargo;
 
     @ManyToOne
     @JoinColumn(name = "crt_id")

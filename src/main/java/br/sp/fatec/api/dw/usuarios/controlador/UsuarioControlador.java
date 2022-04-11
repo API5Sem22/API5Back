@@ -48,4 +48,12 @@ public class UsuarioControlador {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping(value = "nivel-carteira")
+    public ResponseEntity<Void> atualizarNivelCarteira(@RequestBody UsuarioModelo modelo){
+
+        service.atualizarCarteira(modelo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

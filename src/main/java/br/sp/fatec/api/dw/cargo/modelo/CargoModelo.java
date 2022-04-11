@@ -1,4 +1,4 @@
-package br.sp.fatec.api.dw.cargo;
+package br.sp.fatec.api.dw.cargo.modelo;
 
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Cargo")
-public class CargoModel {
+public class CargoModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
