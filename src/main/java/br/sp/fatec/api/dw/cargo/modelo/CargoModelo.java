@@ -1,6 +1,7 @@
 package br.sp.fatec.api.dw.cargo.modelo;
 
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class CargoModelo {
     @Column(name = "car_descricao",nullable = false,unique = true,length = 50)
     private String descricao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY)
     private List<UsuarioModelo> usuarios;
 
