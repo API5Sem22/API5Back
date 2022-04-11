@@ -29,6 +29,12 @@ public class UsuarioControlador {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<UsuarioModelo> listaUsuario(@PathVariable String email){
+        UsuarioModelo user = service.listaPorEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> registraUsuario(@RequestBody UsuarioModelo modelo){
         service.registrar(modelo);
