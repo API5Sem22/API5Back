@@ -14,7 +14,7 @@ public class CargoModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id ")
+    @Column(name = "car_id")
     private Integer idCargo;
 
     @Column(name = "car_descricao",nullable = false,unique = true,length = 50)

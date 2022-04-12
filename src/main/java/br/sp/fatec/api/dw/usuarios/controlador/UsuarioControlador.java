@@ -43,8 +43,8 @@ public class UsuarioControlador {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deletaUsuario(@RequestParam Long id){
-        service.deletar(id);
+    public ResponseEntity<Void> deletaUsuario(@RequestParam String email){
+        service.deletar(email);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

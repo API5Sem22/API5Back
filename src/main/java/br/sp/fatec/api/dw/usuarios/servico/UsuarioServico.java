@@ -35,9 +35,9 @@ public class UsuarioServico {
         }
     }
 
-    public void deletar(Long id) {
+    public void deletar(String email) {
         try {
-            repository.deleteById(id);
+            repository.deleteByEmail(email);
         } catch (Exception e){
             e.getStackTrace();
         }
