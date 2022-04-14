@@ -1,9 +1,7 @@
 package br.sp.fatec.api.dw.empresa.servico;
 
-import br.sp.fatec.api.dw.empresa.modelo.EmpresaDescModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.repositorio.EmpresaRepositorio;
-import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +23,12 @@ public class EmpresaServico {
         try {
             EmpresaModelo empresaModelo = listaPorEmail(modelo);
 
-            empresaModelo.setNivel(modelo.getNivel());
-            empresaModelo.setVendedor(modelo.getVendedor());
+            if(modelo.getNivel() != null) {
+                empresaModelo.setNivel(modelo.getNivel());
+            }
+            if(modelo.getVendedor() != null) {
+                empresaModelo.setNivel(modelo.getNivel());
+            }
 
             repository.save(empresaModelo);
         }catch (NullPointerException e){

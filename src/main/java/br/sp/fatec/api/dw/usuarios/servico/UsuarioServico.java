@@ -56,8 +56,7 @@ public class UsuarioServico {
     }
 
     public void atualizarCarteira(UsuarioModelo modelo) {
-        UsuarioModelo usuario = new UsuarioModelo();
-        usuario = repository.findByEmail(modelo.getEmail());
+        UsuarioModelo usuario = repository.findByEmail(modelo.getEmail());
         if (usuario != null){
             usuario.setCarteira(modelo.getCarteira());
             repository.save(usuario);
