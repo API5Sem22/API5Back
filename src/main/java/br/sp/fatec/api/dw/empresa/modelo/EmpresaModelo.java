@@ -12,11 +12,13 @@ import java.io.Serializable;
 public class EmpresaModelo implements Serializable {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "emp_id")
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "emp_cnpj_d")
-    private EmpresaDescModelo cnpjd;
+    @OneToOne
+    @JoinColumn(name="emp_cnpj_d")
+    private EmpresaDescModelo cnpj;
 
     @ManyToOne
     @JoinColumn(name = "cid_id")

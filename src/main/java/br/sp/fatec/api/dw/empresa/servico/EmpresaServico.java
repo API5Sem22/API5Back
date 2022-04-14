@@ -17,20 +17,16 @@ public class EmpresaServico {
         this.repository = repository;
     }
 
-    public EmpresaModelo listaPorEmail(EmpresaDescModelo modelo){
-
-        return repository.findByCnpjd(modelo);
+    public EmpresaModelo listaPorEmail(EmpresaModelo modelo){
+        return repository.findByCnpj(modelo.getCnpj());
     }
 
-    public void atualizar(EmpresaDescModelo modelo, String emailVendedor, String nivel) {
+    public void atualizar(EmpresaModelo modelo) {
         try {
             EmpresaModelo empresaModelo = listaPorEmail(modelo);
 
-            UsuarioModelo usu = new UsuarioModelo();
-            usu.setEmail(emailVendedor);
-
-            empresaModelo.setNivel(nivel);
-            empresaModelo.setVendedor(usu);
+            empresaModelo.setNivel(modelo.getNivel());
+            empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);
         }catch (NullPointerException e){

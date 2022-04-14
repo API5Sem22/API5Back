@@ -1,6 +1,5 @@
 package br.sp.fatec.api.dw.empresa.controlador;
 
-import br.sp.fatec.api.dw.empresa.modelo.EmpresaDescModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.servico.EmpresaServico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +19,15 @@ public class EmpresaControlador {
         this.service = service;
     }
 
-    @GetMapping("/{cnpj}")
-    public ResponseEntity<EmpresaModelo> listaUsuario(@PathVariable String cnpj){
-        EmpresaDescModelo desc = new EmpresaDescModelo();
-        desc.setCnpjd(cnpj);
-        EmpresaModelo empresaModelo = service.listaPorEmail(desc);
+    @GetMapping("/org")
+    public ResponseEntity<EmpresaModelo> listaEmpresa(@RequestBody EmpresaModelo modelo){
+        EmpresaModelo empresaModelo = service.listaPorEmail(modelo);
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
-//    @PutMapping()
-//    public ResponseEntity<Void> atualizar(@RequestBody EmpresaModelo modelo){
-//        EmpresaDescModelo desc = new EmpresaDescModelo();
-//        desc.setCnpjd(cnpj);
-//        service.atualizar(desc, emailVendedor, nivel);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PutMapping("/upt")
+    public ResponseEntity<Void> atualizar(@RequestBody EmpresaModelo modelo){
+        service.atualizar(modelo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
