@@ -14,7 +14,7 @@ public class CarteiraModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "crt_id  ")
+    @Column(name = "crt_id")
     private Integer idCarteira;
 
     @Column(name = "crt_descricao",nullable = false,unique = true,length = 50)
