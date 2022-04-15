@@ -19,9 +19,9 @@ public class EmpresaControlador {
         this.service = service;
     }
 
-    @GetMapping("/org")
-    public ResponseEntity<EmpresaModelo> listaEmpresa(@RequestBody EmpresaModelo modelo){
-        EmpresaModelo empresaModelo = service.listaPorEmail(modelo);
+    @GetMapping("/org/{cnpj}")
+    public ResponseEntity<EmpresaModelo> listaEmpresa(@PathVariable String cnpj){
+        EmpresaModelo empresaModelo = service.listaPorEmail(cnpj);
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
