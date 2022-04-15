@@ -25,13 +25,9 @@ public class EmpresaServico {
     public void atualizar(EmpresaModelo modelo) {
         try {
             EmpresaModelo empresaModelo = listaPorEmail(modelo.getCnpj().getCnpj());
-
-            if(modelo.getNivel() != null) {
-                empresaModelo.setNivel(modelo.getNivel());
-            }
-            if(modelo.getVendedor() != null) {
-                empresaModelo.setNivel(modelo.getNivel());
-            }
+            
+            empresaModelo.setNivel(modelo.getNivel());
+            empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);
         }catch (NullPointerException e){
