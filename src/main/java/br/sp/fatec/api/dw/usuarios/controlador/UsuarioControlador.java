@@ -42,8 +42,8 @@ public class UsuarioControlador {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletaUsuario(@RequestParam String email){
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<Void> deletaUsuario(@PathVariable String email){
         service.deletar(email);
 
         return new ResponseEntity<>(HttpStatus.OK);

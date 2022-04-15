@@ -1,5 +1,6 @@
 package br.sp.fatec.api.dw.empresa.servico;
 
+import br.sp.fatec.api.dw.empresa.modelo.EmpresaDescModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.repositorio.EmpresaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ public class EmpresaServico {
         this.repository = repository;
     }
 
-    public EmpresaModelo listaPorEmail(EmpresaModelo modelo){
-        return repository.findByCnpj(modelo.getCnpj());
+    public EmpresaModelo listaPorEmail(String cnpj){
+        EmpresaDescModelo emp = new EmpresaDescModelo();
+        emp.setCnpj(cnpj);
+        return repository.findByCnpj(emp);
     }
 
     public void atualizar(EmpresaModelo modelo) {
         try {
-            EmpresaModelo empresaModelo = listaPorEmail(modelo);
+            EmpresaModelo empresaModelo = listaPorEmail(modelo.getCnpj().getCnpj());
 
             if(modelo.getNivel() != null) {
                 empresaModelo.setNivel(modelo.getNivel());
