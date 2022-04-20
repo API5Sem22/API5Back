@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RequestMapping("/empresas")
 @RestController
 @CrossOrigin
@@ -28,6 +30,12 @@ public class EmpresaControlador {
     @PutMapping("/upt")
     public ResponseEntity<Void> atualizar(@RequestBody EmpresaModelo modelo){
         service.atualizar(modelo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/csv")
+    public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
+        service.readCsv();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
