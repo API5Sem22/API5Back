@@ -37,4 +37,5 @@ public class EmpresaModelo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usu_email")
     private UsuarioModelo vendedor;
+
 }

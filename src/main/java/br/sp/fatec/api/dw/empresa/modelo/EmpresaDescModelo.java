@@ -1,7 +1,10 @@
 package br.sp.fatec.api.dw.empresa.modelo;
 
+import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -36,4 +39,7 @@ public class EmpresaDescModelo {
     @Column(name = "emp_natureza_juridica_d")
     private String naturezaJuridica;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "consumo", fetch = FetchType.LAZY)
+    private List<ConsumoModelo> consumos;
 }
