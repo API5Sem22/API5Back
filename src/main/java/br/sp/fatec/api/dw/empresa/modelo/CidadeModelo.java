@@ -13,7 +13,7 @@ public class CidadeModelo {
 
     @Id
     @Column(name = "cid_id")
-    private Integer id;
+    private Integer idCidade;
 
     @Column(name = "cid_nome")
     private String nome;

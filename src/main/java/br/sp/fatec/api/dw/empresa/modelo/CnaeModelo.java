@@ -13,7 +13,7 @@ public class CnaeModelo {
 
     @Id
     @Column(name = "cne_id")
-    private Integer id;
+    private Integer idCnae;
 
     @Column(name = "cne_cod")
     private Integer codigo;

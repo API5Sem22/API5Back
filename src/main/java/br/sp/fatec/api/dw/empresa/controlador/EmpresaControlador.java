@@ -32,7 +32,7 @@ public class EmpresaControlador {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/csv")
+    @PostMapping("/csv")
     public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
         service.readCsv();
         return new ResponseEntity<>(HttpStatus.OK);

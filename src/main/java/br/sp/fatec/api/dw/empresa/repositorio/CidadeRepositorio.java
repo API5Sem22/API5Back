@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CidadeRepositorio extends JpaRepository <CidadeModelo,Integer> {
+
+    CidadeModelo findByIdCidade(Integer id);
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CnaeRepositorio extends JpaRepository <CnaeModelo,Integer> {
+
+    CnaeModelo findByIdCnae(Integer id);
 }
