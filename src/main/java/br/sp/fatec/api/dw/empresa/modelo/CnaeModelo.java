@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -13,7 +13,7 @@ public class CnaeModelo {
 
     @Id
     @Column(name = "cne_id")
-    private Integer idCnae;
+    private Integer id;
 
     @Column(name = "cne_cod")
     private Integer codigo;
@@ -23,5 +23,5 @@ public class CnaeModelo {
 
     @JsonIgnore
     @OneToMany(mappedBy = "idCnae", fetch = FetchType.LAZY)
-    private List<EmpresaModelo> empresas;
+    private Set<EmpresaModelo> empresas;
 }

@@ -5,7 +5,6 @@ import br.sp.fatec.api.dw.empresa.repositorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.*;
-import java.util.Objects;
 
 @Service
 public class EmpresaServico {
@@ -117,7 +116,7 @@ public class EmpresaServico {
 //        // EMPRESA DESC
 //        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\Externo\\base_empresas_det.csv");
 //        FileInputStream stream = new FileInputStream(file);
-//        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "ISO-8859-1"));
+//        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 //        String proLinha = lerArq.readLine();
 //
 //        int k = 0;
@@ -127,16 +126,16 @@ public class EmpresaServico {
 //                proLinha = lerArq.readLine();
 //                continue;
 //            }
-//            String[] proDados = proLinha.split(",");
+//            String[] proDados = proLinha.split(";");
 //            String cnpj = proDados[2];
-//            String nome = proDados[8].replace("\"", "");
-//            String porte = proDados[9].replace("\"", "");
-//            String tipo = proDados[12].replace("\"", "");
-//            String situacao = proDados[10].replace("\"", "");
-//            String dataAbertura = proDados[0].replace("\"", "");
-//            String email = proDados[3].replace("\"", "");
-//            String telefone = proDados[11].replace("\"", "");
-//            String naturezaJuridica = proDados[7].replace("\"", "");
+//            String nome = (proDados[8].isEmpty()) ? null : proDados[8];
+//            String porte = (proDados[9].isEmpty()) ? null : proDados[9];
+//            String tipo = (proDados[12].isEmpty()) ? null : proDados[12];
+//            String situacao = (proDados[10].isEmpty()) ? null : proDados[10];
+//            String dataAbertura = (proDados[0].isEmpty()) ? null : proDados[0];
+//            String email = (proDados[3].isEmpty()) ? null : proDados[3];
+//            String telefone = (proDados[11].isEmpty()) ? null : proDados[11];
+//            String naturezaJuridica = (proDados[7].isEmpty()) ? null : proDados[7];
 //
 //            EmpresaDescModelo empresadesc = new EmpresaDescModelo();
 //            empresadesc.setCnpj(cnpj);
@@ -165,10 +164,10 @@ public class EmpresaServico {
 //        }
 //        lerArq.close();
 
-//        // CONSUMO
-//        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_consumo.csv");
+//        // EMPRESA DESC SEM INFOS
+//        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_empresas.csv");
 //        FileInputStream stream = new FileInputStream(file);
-//        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "ISO-8859-1"));
+//        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 //        String proLinha = lerArq.readLine();
 //
 //        int k = 0;
@@ -179,34 +178,31 @@ public class EmpresaServico {
 //                continue;
 //            }
 //            String[] proDados = proLinha.split(",");
-//            String cnpj = proDados[1];
-//            String mes_referencia = proDados[0];
-//            String id_produto = proDados[2];
-//            String consumo = proDados[3];
+//            String cnpj = proDados[0];
+//            if(cnpj.length() < 14){
+//                int numeroZeros = 14 - cnpj.length();
+//                for(int i = 0; i < numeroZeros; i++){
+//                    cnpj = "0" + cnpj;
+//                }
+//            }
 //
 //            EmpresaDescModelo desc = repositoryDesc.findByCnpj(cnpj);
 //
-//            if (desc != null) {
-//                ConsumoModelo consumoModelo = new ConsumoModelo();
-//                consumoModelo.setCnpj(desc);
-//                consumoModelo.setMes_referencia(mes_referencia);
-//                consumoModelo.setId_produto(id_produto);
-//                consumoModelo.setConsumo(Integer.parseInt(consumo));
+//            if (desc == null) {
+//                EmpresaDescModelo empresadesc = new EmpresaDescModelo();
+//                empresadesc.setCnpj(cnpj);
 //
-//                repositoryConsumo.save(consumoModelo);
+//                repositoryDesc.save(empresadesc);
 //
-//                System.out.println("cpnj : " + cnpj +
-//                        " - mes_referencia : " + mes_referencia +
-//                        " - id_produto : " + id_produto +
-//                        " - consumo : " + consumo);
+//                System.out.println("cpnj : " + cnpj);
 //            }
 //
 //            proLinha = lerArq.readLine();
 //        }
 //        lerArq.close();
 
-        // EMPRESA
-        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_empresas.csv");
+        // CONSUMO
+        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_consumo.csv");
         FileInputStream stream = new FileInputStream(file);
         BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "ISO-8859-1"));
         String proLinha = lerArq.readLine();
@@ -219,44 +215,96 @@ public class EmpresaServico {
                 continue;
             }
             String[] proDados = proLinha.split(",");
-            String cnpj = proDados[0];
-            String idCidade = proDados[1];
-            String idCnae = proDados[2];
-            String origem = proDados[3].replace("\"", "");
+            String cnpj = proDados[1];
+            if(cnpj.length() < 14){
+                int numeroZeros = 14 - cnpj.length();
+                for(int i = 0; i < numeroZeros; i++){
+                    cnpj = "0" + cnpj;
+                }
+            }
+            String mes_referencia = proDados[0];
+            String id_produto = proDados[2];
+            String consumo = proDados[3];
 
             EmpresaDescModelo desc = repositoryDesc.findByCnpj(cnpj);
 
-            CidadeModelo cidadeModelo = new CidadeModelo();
-            if(idCidade.equals("")){
-                cidadeModelo = null;
-            } else {
-                cidadeModelo = repositoryCidade.findByIdCidade(Integer.parseInt(idCidade));
-            }
-
-            CnaeModelo cnaeModelo = new CnaeModelo();
-            if (idCnae.equals("")){
-                cnaeModelo = null;
-            } else {
-                cnaeModelo = repositoryCnae.findByIdCnae(Integer.parseInt(idCnae));
-            }
-
             if (desc != null) {
-                EmpresaModelo empresa = new EmpresaModelo();
-                empresa.setCnpj(desc);
-                empresa.setIdCidade(cidadeModelo);
-                empresa.setIdCnae(cnaeModelo);
-                empresa.setOrigem(origem);
+                ConsumoModelo consumoModelo = new ConsumoModelo();
+                consumoModelo.setCnpj(desc);
+                consumoModelo.setMes_referencia(mes_referencia);
+                consumoModelo.setId_produto(id_produto);
+                consumoModelo.setConsumo(Integer.parseInt(consumo));
 
-                repository.save(empresa);
+                repositoryConsumo.save(consumoModelo);
 
                 System.out.println("cpnj : " + cnpj +
-                        " - idCidade : " + idCidade +
-                        " - idCnae : " + idCnae +
-                        " - origem : " + origem);
+                        " - mes_referencia : " + mes_referencia +
+                        " - id_produto : " + id_produto +
+                        " - consumo : " + consumo);
             }
 
             proLinha = lerArq.readLine();
         }
         lerArq.close();
+
+//        // EMPRESA
+//        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_empresas.csv");
+//        FileInputStream stream = new FileInputStream(file);
+//        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream, "ISO-8859-1"));
+//        String proLinha = lerArq.readLine();
+//
+//        int k = 0;
+//        while (proLinha != null){
+//            if(k == 0){
+//                k++;
+//                proLinha = lerArq.readLine();
+//                continue;
+//            }
+//            String[] proDados = proLinha.split(",");
+//            String cnpj = proDados[0];
+//            if(cnpj.length() < 14){
+//                int numeroZeros = 14 - cnpj.length();
+//                for(int i = 0; i < numeroZeros; i++){
+//                    cnpj = "0" + cnpj;
+//                }
+//            }
+//            String idCidade = proDados[1];
+//            String idCnae = proDados[2];
+//            String origem = proDados[3].replace("\"", "");
+//
+//            EmpresaDescModelo desc = repositoryDesc.findByCnpj(cnpj);
+//
+//            CidadeModelo cidadeModelo = new CidadeModelo();
+//            if(idCidade.equals("")){
+//                cidadeModelo = null;
+//            } else {
+//                cidadeModelo = repositoryCidade.findByIdCidade(Integer.parseInt(idCidade));
+//            }
+//
+//            CnaeModelo cnaeModelo = new CnaeModelo();
+//            if (idCnae.equals("")){
+//                cnaeModelo = null;
+//            } else {
+//                cnaeModelo = repositoryCnae.findByIdCnae(Integer.parseInt(idCnae));
+//            }
+//
+//            if (desc != null) {
+//                EmpresaModelo empresa = new EmpresaModelo();
+//                empresa.setCnpj(desc);
+//                empresa.setIdCidade(cidadeModelo);
+//                empresa.setIdCnae(cnaeModelo);
+//                empresa.setOrigem(origem);
+//
+//                repository.save(empresa);
+//
+//                System.out.println("cpnj : " + cnpj +
+//                        " - idCidade : " + idCidade +
+//                        " - idCnae : " + idCnae +
+//                        " - origem : " + origem);
+//            }
+//
+//            proLinha = lerArq.readLine();
+//        }
+//        lerArq.close();
     }
 }
