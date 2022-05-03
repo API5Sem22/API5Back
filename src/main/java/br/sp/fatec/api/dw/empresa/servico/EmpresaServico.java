@@ -17,6 +17,7 @@ public class EmpresaServico {
     }
 
     public EmpresaModelo listaPorEmail(String cnpj){
+
         EmpresaDescModelo emp = new EmpresaDescModelo();
         emp.setCnpj(cnpj);
         return repository.findByCnpj(emp);
@@ -30,8 +31,8 @@ public class EmpresaServico {
             empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);
-        }catch (NullPointerException e){
-            e.getStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
