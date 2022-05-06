@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 
 @RequestMapping("/empresas")
 @RestController
@@ -21,13 +22,19 @@ public class EmpresaControlador {
 
     @GetMapping("/org/{cnpj}")
     public ResponseEntity<EmpresaModelo> listaEmpresa(@PathVariable String cnpj){
-        EmpresaModelo empresaModelo = service.listaPorEmail(cnpj);
+        EmpresaModelo empresaModelo = service.listaPorCnpj(cnpj);
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
     @PutMapping("/upt")
     public ResponseEntity<Void> atualizar(@RequestBody EmpresaModelo modelo){
         service.atualizar(modelo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/csv")
+    public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
+        service.readCsv();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

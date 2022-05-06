@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,5 +26,5 @@ public class CidadeModelo {
 
     @JsonIgnore
     @OneToMany(mappedBy = "idCidade", fetch = FetchType.LAZY)
-    private List<EmpresaModelo> empresas;
+    private Set<EmpresaModelo> empresas;
 }

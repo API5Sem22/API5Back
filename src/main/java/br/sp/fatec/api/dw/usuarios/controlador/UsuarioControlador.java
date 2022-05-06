@@ -31,7 +31,6 @@ public class UsuarioControlador {
 
     @GetMapping("/{email}")
     public ResponseEntity<UsuarioModelo> listaUsuario(@PathVariable String email){
-
         UsuarioModelo user = service.listaPorEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
