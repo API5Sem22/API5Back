@@ -4,6 +4,7 @@ import br.sp.fatec.api.dw.empresa.modelo.EmpresaDescModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.repositorio.EmpresaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,10 +18,13 @@ public class EmpresaServico {
     }
 
     public EmpresaModelo listaPorEmail(String cnpj){
-
-        EmpresaDescModelo emp = new EmpresaDescModelo();
-        emp.setCnpj(cnpj);
-        return repository.findByCnpj(emp);
+        try{
+            EmpresaDescModelo emp = new EmpresaDescModelo();
+            emp.setCnpj(cnpj);
+            return repository.findByCnpj(emp);
+        } catch (EmptyResultDataAccessException ep){
+            throw new EmptyResultDataAccessException("Nenhum elemento encontrado",1);
+        }
     }
 
     public void atualizar(EmpresaModelo modelo) {
