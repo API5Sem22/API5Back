@@ -3,6 +3,7 @@ package br.sp.fatec.api.dw.empresa.servico;
 import br.sp.fatec.api.dw.empresa.modelo.*;
 import br.sp.fatec.api.dw.empresa.repositorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.Optional;
@@ -26,21 +27,24 @@ public class EmpresaServico {
     }
 
     public EmpresaModelo listaPorCnpj(String cnpj){
+
+
         EmpresaDescModelo emp = new EmpresaDescModelo();
         emp.setCnpj(cnpj);
         return repository.findByCnpj(emp);
     }
 
     public void atualizar(EmpresaModelo modelo) {
-        try {
+
+        if(modelo.getCnpj() != null){
             EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
 
             empresaModelo.setNivel(modelo.getNivel());
             empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);
-        }catch (NullPointerException e){
-            e.getStackTrace();
+        }else {
+            throw new NullPointerException("Entrada inválida");
         }
     }
 
