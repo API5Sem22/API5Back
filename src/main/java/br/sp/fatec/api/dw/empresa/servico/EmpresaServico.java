@@ -43,6 +43,18 @@ public class EmpresaServico {
         }
     }
 
+    public void atualizaVendedor(EmpresaModelo modelo) {
+        try {
+            EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
+
+            empresaModelo.setVendedor(modelo.getVendedor());
+
+            repository.save(empresaModelo);
+        }catch (NullPointerException e){
+            e.getStackTrace();
+        }
+    }
+
     public void readCsv() throws IOException {
 //        //CNAE
 //        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\base_cnae.csv");
