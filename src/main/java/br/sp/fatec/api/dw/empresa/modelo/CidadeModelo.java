@@ -15,7 +15,6 @@ public class CidadeModelo {
     @Column(name = "cid_id")
     private Integer id;
 
-
     @Column(name = "cid_nome")
     private String nome;
 
