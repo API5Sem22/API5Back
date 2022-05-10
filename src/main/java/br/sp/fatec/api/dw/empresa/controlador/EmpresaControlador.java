@@ -32,6 +32,12 @@ public class EmpresaControlador {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/atualiza-vendedor")
+    public ResponseEntity<Void> atualizarVendedor(@RequestBody EmpresaModelo modelo){
+        service.atualizar(modelo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/csv")
     public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
         service.populateNivelEmpresa();
