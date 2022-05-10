@@ -322,4 +322,33 @@ public class EmpresaServico {
         }
         lerArq.close();
     }
+
+    public void populateNivelEmpresa() throws IOException {
+        // EMPRESA
+        BufferedReader buffRead = new BufferedReader(new FileReader("C:\\Users\\GabrielSG\\Downloads\\message.txt"));
+        String linha = "";
+
+        while (true) {
+            linha = buffRead.readLine();
+            if (linha != null) {
+                String cnpj = linha.substring(0, 14);
+                String nivel = linha.substring(15);
+
+                EmpresaDescModelo desc = new EmpresaDescModelo();
+                desc.setCnpj(cnpj);
+
+                EmpresaModelo empresa = repository.findByCnpj(desc);
+
+                if (empresa != null) {
+                    empresa.setNivel(nivel);
+                    repository.save(empresa);
+
+                    System.out.println("cpnj : " + cnpj +
+                            " - nivel : " + nivel);
+                }
+            } else
+                break;
+        }
+        buffRead.close();
+    }
 }
