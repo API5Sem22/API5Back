@@ -27,6 +27,8 @@ public class EmpresaServico {
     }
 
     public EmpresaModelo listaPorCnpj(String cnpj){
+
+
         EmpresaDescModelo emp = new EmpresaDescModelo();
         emp.setCnpj(cnpj);
         return repository.findByCnpj(emp);
