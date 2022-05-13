@@ -29,7 +29,10 @@ jobs:
 workflows:
   build-test: 
     jobs:
-      - build-and-test
+      - build-and-test:
+          filters:
+                  branches:
+                    ignore: main
   build-deploy:
     jobs:
       - build-deploy:
