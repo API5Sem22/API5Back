@@ -1,5 +1,4 @@
 package br.sp.fatec.api.dw.servico;
-
 import br.sp.fatec.api.dw.cargo.modelo.CargoModelo;
 import br.sp.fatec.api.dw.carteira.CarteiraModel;
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
@@ -21,5 +20,4 @@ public class UsuarioServicoTest {
 
     @Autowired
     private UsuarioServico usuarioServico;
-
 }
