@@ -2,10 +2,12 @@ package br.sp.fatec.api.dw.empresa.servico;
 
 import br.sp.fatec.api.dw.empresa.modelo.*;
 import br.sp.fatec.api.dw.empresa.repositorio.*;
+import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import java.io.*;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +32,16 @@ public class EmpresaServico {
         EmpresaDescModelo emp = new EmpresaDescModelo();
         emp.setCnpj(cnpj);
         return repository.findByCnpj(emp);
+    }
+
+    public List<EmpresaModelo> listaPorVendedor(String email){
+        UsuarioModelo vendedor = new UsuarioModelo();
+        vendedor.setEmail(email);
+        return repository.findByVendedor(vendedor);
+    }
+
+    public List<EmpresaModelo> listaLivres(){
+        return repository.findByOrigem("LIVRE");
     }
 
     public void atualizar(EmpresaModelo modelo) {

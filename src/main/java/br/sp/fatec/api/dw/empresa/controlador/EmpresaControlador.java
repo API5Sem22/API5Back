@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("/empresas")
 @RestController
@@ -23,6 +24,18 @@ public class EmpresaControlador {
     @GetMapping("/org/{cnpj}")
     public ResponseEntity<EmpresaModelo> listaEmpresa(@PathVariable String cnpj){
         EmpresaModelo empresaModelo = service.listaPorCnpj(cnpj);
+        return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
+    }
+
+    @GetMapping("/carteira/{email}")
+    public ResponseEntity<List<EmpresaModelo>> listaPorVendedor(@PathVariable String email){
+        List<EmpresaModelo> empresaModelo = service.listaPorVendedor(email);
+        return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
+    }
+
+    @GetMapping("/livres")
+    public ResponseEntity<List<EmpresaModelo>> listaLivres(){
+        List<EmpresaModelo> empresaModelo = service.listaLivres();
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
