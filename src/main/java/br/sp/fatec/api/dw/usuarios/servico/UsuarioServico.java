@@ -39,6 +39,8 @@ public class UsuarioServico {
             repository.save(modelo);
         } catch (DataIntegrityViolationException di){
             throw new DataIntegrityViolationException("Restrição de banco de dados violada",di);
+        } catch (NullPointerException np){
+            throw new NullPointerException("Elemento não encontrado");
         }
     }
 
