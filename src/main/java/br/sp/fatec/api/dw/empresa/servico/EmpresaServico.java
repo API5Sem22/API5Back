@@ -5,6 +5,10 @@ import br.sp.fatec.api.dw.empresa.repositorio.*;
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.List;
@@ -40,8 +44,10 @@ public class EmpresaServico {
         return repository.findByVendedor(vendedor);
     }
 
-    public List<EmpresaModelo> listaLivres(){
-        return repository.findByOrigem("LIVRE");
+    public Page<EmpresaModelo> listaLivres(int size, int page){
+        final String livre = "LIVRE";
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.ASC, "origem");
+        return repository.findAllByOrigem(livre, pageRequest);
     }
 
     public void atualizar(EmpresaModelo modelo) {
