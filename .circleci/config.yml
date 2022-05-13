@@ -23,8 +23,8 @@ jobs:
             set -x
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a teste-deploy-ci web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a teste-deploy-ci web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a datawarriors-back web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a datawarriors-back web
 
 workflows:
   build-test: 
@@ -32,4 +32,7 @@ workflows:
       - build-and-test
   build-deploy:
     jobs:
-      - build-deploy
+      - build-deploy:
+          filters:
+                branches:
+                  only: main
