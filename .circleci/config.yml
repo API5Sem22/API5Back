@@ -13,7 +13,7 @@ jobs:
           name: Test
           command: mvn test
 
-   build-deploy:
+  build-deploy:
     machine: true
     steps:
       - checkout
