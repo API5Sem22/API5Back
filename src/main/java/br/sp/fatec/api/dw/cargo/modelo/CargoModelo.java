@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,6 +22,6 @@ public class CargoModelo {
 
     @JsonIgnore
     @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY)
-    private List<UsuarioModelo> usuarios;
+    private Set<UsuarioModelo> usuarios;
 
 }

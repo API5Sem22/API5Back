@@ -34,6 +34,9 @@ public class EmpresaModelo implements Serializable {
     @Column(name = "emp_nivel")
     private String nivel;
 
+    @Column(name = "emp_prospeccao")
+    private String prospeccao;
+
     @ManyToOne
     @JoinColumn(name = "usu_email")
     private UsuarioModelo vendedor;
