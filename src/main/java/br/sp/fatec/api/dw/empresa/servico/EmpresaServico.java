@@ -38,16 +38,27 @@ public class EmpresaServico {
         return repository.findByCnpj(emp);
     }
 
-    public List<EmpresaModelo> listaPorVendedor(String email){
-        UsuarioModelo vendedor = new UsuarioModelo();
-        vendedor.setEmail(email);
-        return repository.findByVendedor(vendedor);
+
+    public Page<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+        final String livre = "LIVRE";
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+        if (cnae == 0) {
+            return repository.findAllByOrigem(livre, pageRequest);
+        } else {
+            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+        }
     }
 
-    public Page<EmpresaModelo> listaLivres(int size, int page){
-        final String livre = "LIVRE";
-        PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.ASC, "origem");
-        return repository.findAllByOrigem(livre, pageRequest);
+    public List<EmpresaModelo> listaPorVendedorFiltroCnae(String email, Integer cnae){
+        UsuarioModelo vendedor = new UsuarioModelo();
+        vendedor.setEmail(email);
+        if (cnae == 0){
+            return repository.findByVendedor(vendedor);
+        } else {
+            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+            return repository.findByVendedorAndIdCnae(vendedor, cnaeModelo);
+        }
     }
 
     public void atualizar(EmpresaModelo modelo) {
@@ -56,6 +67,19 @@ public class EmpresaServico {
             EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
 
             empresaModelo.setNivel(modelo.getNivel());
+            empresaModelo.setVendedor(modelo.getVendedor());
+
+            repository.save(empresaModelo);
+        }else {
+            throw new NullPointerException("Entrada inválida");
+        }
+    }
+
+    public void atualizaVendedor(EmpresaModelo modelo) {
+
+        if(modelo.getCnpj() != null){
+            EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
+
             empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);

@@ -25,9 +25,7 @@ public class EmpresaDescricaoServico {
     public void atualizar(EmpresaDescModelo modeloEmpresa) {
     EmpresaDescModelo empresaModelo = repositorio.findByCnpj(modeloEmpresa.getCnpj());
     if (empresaModelo != null){
-        empresaModelo.setTipo(modeloEmpresa.getTipo());
-        empresaModelo.setTelefone(modeloEmpresa.getTelefone());
-        empresaModelo.setSituacao(modeloEmpresa.getSituacao());
+        empresaModelo.setEmail(modeloEmpresa.getEmail());
         empresaModelo.setTelefone(modeloEmpresa.getTelefone());
 
         repositorio.save(empresaModelo);

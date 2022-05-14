@@ -29,16 +29,17 @@ public class EmpresaControlador {
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
-    @GetMapping("/carteira/{email}")
-    public ResponseEntity<List<EmpresaModelo>> listaPorVendedor(@PathVariable String email){
-        List<EmpresaModelo> empresaModelo = service.listaPorVendedor(email);
+    @GetMapping("/carteira/{email}/{cnae}")
+    public ResponseEntity<List<EmpresaModelo>> listaPorVendedorFiltroCnae(@PathVariable String email, @PathVariable Integer cnae){
+        List<EmpresaModelo> empresaModelo = service.listaPorVendedorFiltroCnae(email, cnae);
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
-    @GetMapping("/livres")
-    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "10") int size,
-                                                           @RequestParam(value = "page", defaultValue = "0") int page){
-        Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page);
+    @GetMapping("/livres/{cnae}")
+    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "8") int size,
+                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                                           @PathVariable Integer cnae){
+        Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page, cnae);
         return new ResponseEntity<>(empresaModelo.getContent(), HttpStatus.OK);
     }
 
@@ -50,7 +51,7 @@ public class EmpresaControlador {
 
     @PutMapping("/atualiza-vendedor")
     public ResponseEntity<Void> atualizarVendedor(@RequestBody EmpresaModelo modelo){
-        service.atualizar(modelo);
+        service.atualizaVendedor(modelo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

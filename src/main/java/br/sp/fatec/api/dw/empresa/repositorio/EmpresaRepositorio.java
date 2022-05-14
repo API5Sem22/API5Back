@@ -1,5 +1,6 @@
 package br.sp.fatec.api.dw.empresa.repositorio;
 
+import br.sp.fatec.api.dw.empresa.modelo.CnaeModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaDescModelo;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
@@ -18,4 +19,12 @@ public interface EmpresaRepositorio extends JpaRepository<EmpresaModelo, Empresa
     List<EmpresaModelo> findByVendedor(UsuarioModelo vendedor);
 
     Page<EmpresaModelo> findAllByOrigem(String livre, Pageable pageable);
+
+    Page<EmpresaModelo> findAllByOrigemAndIdCnae(String livre, CnaeModelo cnaeModelo, Pageable pageable);
+
+    List<EmpresaModelo> findByVendedorAndIdCnae(UsuarioModelo vendedor, CnaeModelo cnaeModelo);
+
+    List<EmpresaModelo> findByOrigem(String origem);
+
+    List<EmpresaModelo> findByOrigemAndIdCnae(String origem, CnaeModelo cnaeModelo);
 }
