@@ -86,6 +86,7 @@ public class EmpresaServico {
         }else {
             throw new NullPointerException("Entrada inválida");
         }
+        lerArq.close();
     }
 
     public void readCsvCnae() throws IOException {
