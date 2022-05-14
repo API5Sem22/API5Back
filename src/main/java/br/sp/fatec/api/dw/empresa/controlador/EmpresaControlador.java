@@ -3,10 +3,13 @@ package br.sp.fatec.api.dw.empresa.controlador;
 import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.servico.EmpresaServico;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("/empresas")
 @RestController
@@ -26,6 +29,20 @@ public class EmpresaControlador {
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
+    @GetMapping("/carteira/{email}/{cnae}")
+    public ResponseEntity<List<EmpresaModelo>> listaPorVendedorFiltroCnae(@PathVariable String email, @PathVariable Integer cnae){
+        List<EmpresaModelo> empresaModelo = service.listaPorVendedorFiltroCnae(email, cnae);
+        return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
+    }
+
+    @GetMapping("/livres/{cnae}")
+    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "8") int size,
+                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                                           @PathVariable Integer cnae){
+        Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page, cnae);
+        return new ResponseEntity<>(empresaModelo.getContent(), HttpStatus.OK);
+    }
+
     @PutMapping("/upt")
     public ResponseEntity<Void> atualizar(@RequestBody EmpresaModelo modelo){
         service.atualizar(modelo);
@@ -34,7 +51,7 @@ public class EmpresaControlador {
 
     @PutMapping("/atualiza-vendedor")
     public ResponseEntity<Void> atualizarVendedor(@RequestBody EmpresaModelo modelo){
-        service.atualizar(modelo);
+        service.atualizaVendedor(modelo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

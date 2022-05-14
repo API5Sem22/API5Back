@@ -2,10 +2,16 @@ package br.sp.fatec.api.dw.empresa.servico;
 
 import br.sp.fatec.api.dw.empresa.modelo.*;
 import br.sp.fatec.api.dw.empresa.repositorio.*;
+import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.*;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,12 +38,48 @@ public class EmpresaServico {
         return repository.findByCnpj(emp);
     }
 
+
+    public Page<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+        final String livre = "LIVRE";
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+        if (cnae == 0) {
+            return repository.findAllByOrigem(livre, pageRequest);
+        } else {
+            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+        }
+    }
+
+    public List<EmpresaModelo> listaPorVendedorFiltroCnae(String email, Integer cnae){
+        UsuarioModelo vendedor = new UsuarioModelo();
+        vendedor.setEmail(email);
+        if (cnae == 0){
+            return repository.findByVendedor(vendedor);
+        } else {
+            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+            return repository.findByVendedorAndIdCnae(vendedor, cnaeModelo);
+        }
+    }
+
     public void atualizar(EmpresaModelo modelo) {
 
         if(modelo.getCnpj() != null){
             EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
 
             empresaModelo.setNivel(modelo.getNivel());
+            empresaModelo.setVendedor(modelo.getVendedor());
+
+            repository.save(empresaModelo);
+        }else {
+            throw new NullPointerException("Entrada inválida");
+        }
+    }
+
+    public void atualizaVendedor(EmpresaModelo modelo) {
+
+        if(modelo.getCnpj() != null){
+            EmpresaModelo empresaModelo = listaPorCnpj(modelo.getCnpj().getCnpj());
+
             empresaModelo.setVendedor(modelo.getVendedor());
 
             repository.save(empresaModelo);
