@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CnaeRepositorio extends JpaRepository <CnaeModelo,Integer> {
 
-    Optional<CnaeModelo> findById(Integer id);
+    CnaeModelo findByCodigo(Integer codigo);
 }
