@@ -4,7 +4,6 @@ import br.sp.fatec.api.dw.empresa.modelo.EmpresaModelo;
 import br.sp.fatec.api.dw.empresa.servico.EmpresaServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class EmpresaControlador {
     }
 
     @GetMapping("/livres/{cnae}")
-    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "8") int size,
+    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "30") int size,
                                                            @RequestParam(value = "page", defaultValue = "0") int page,
                                                            @PathVariable Integer cnae){
         Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page, cnae);
