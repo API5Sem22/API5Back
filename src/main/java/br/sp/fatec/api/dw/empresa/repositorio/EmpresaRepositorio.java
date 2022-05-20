@@ -18,9 +18,13 @@ public interface EmpresaRepositorio extends JpaRepository<EmpresaModelo, Empresa
 
     List<EmpresaModelo> findByVendedor(UsuarioModelo vendedor);
 
-    Page<EmpresaModelo> findAllByOrigem(String livre, Pageable pageable);
+//    Page<EmpresaModelo> findAllByOrigem(String livre, Pageable pageable);
 
-    Page<EmpresaModelo> findAllByOrigemAndIdCnae(String livre, CnaeModelo cnaeModelo, Pageable pageable);
+    List<EmpresaModelo> findAllByOrigemAndProspeccaoAndVendedor(String livre, String prospeccao, UsuarioModelo vendedor);
+
+//    Page<EmpresaModelo> findAllByOrigemAndIdCnae(String livre, CnaeModelo cnaeModelo, Pageable pageable);
+
+    List<EmpresaModelo> findAllByOrigemAndProspeccaoAndVendedorAndIdCnae(String livre, String prospeccao, UsuarioModelo vendedor, CnaeModelo cnaeModelo);
 
     List<EmpresaModelo> findByVendedorAndIdCnae(UsuarioModelo vendedor, CnaeModelo cnaeModelo);
 
