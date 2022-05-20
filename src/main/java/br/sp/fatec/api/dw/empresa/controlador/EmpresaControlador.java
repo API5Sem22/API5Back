@@ -56,7 +56,7 @@ public class EmpresaControlador {
 
     @PostMapping("/csv")
     public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
-        service.populateNivelEmpresa();
+        service.populateProspeccaoEmpresa();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

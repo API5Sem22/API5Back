@@ -391,4 +391,46 @@ public class EmpresaServico {
         }
         buffRead.close();
     }
+
+    public void populateProspeccaoEmpresa() throws IOException {
+        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\dados_livres_ok.csv");
+        FileInputStream stream = new FileInputStream(file);
+        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream));
+        String proLinha = lerArq.readLine();
+
+        int k = 0;
+        while (proLinha != null){
+            if(k == 0){
+                k++;
+                proLinha = lerArq.readLine();
+                continue;
+            }
+            String[] proDados = proLinha.split(";");
+            String cnpj = proDados[0];
+            if(cnpj.length() < 14){
+                int numeroZeros = 14 - cnpj.length();
+                for(int i = 0; i < numeroZeros; i++){
+                    cnpj = "0" + cnpj;
+                }
+            }
+            String prospeccao = proDados[7];
+
+            EmpresaDescModelo desc = repositoryDesc.findByCnpj(cnpj);
+            EmpresaModelo emp = repository.findByCnpj(desc);
+
+            System.out.println("cpnj : " + cnpj +
+                    " - prospeccao : " + prospeccao);
+
+            if (emp != null) {
+                emp.setProspeccao(prospeccao);
+
+                repository.save(emp);
+
+                System.out.println("ATUALIZADO");
+            }
+
+            proLinha = lerArq.readLine();
+        }
+        lerArq.close();
+    }
 }
