@@ -4,10 +4,8 @@ import br.sp.fatec.api.dw.empresa.modelo.*;
 import br.sp.fatec.api.dw.empresa.repositorio.*;
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.*;
@@ -38,17 +36,27 @@ public class EmpresaServico {
         return repository.findByCnpj(emp);
     }
 
-
-    public Page<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+    public List<EmpresaModelo> listaLivres(Integer cnae) {
         final String livre = "LIVRE";
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+        final String prospeccao = "SPC";
         if (cnae == 0) {
-            return repository.findAllByOrigem(livre, pageRequest);
+            return repository.findAllByOrigemAndProspeccaoAndVendedor(livre, prospeccao, null);
         } else {
             CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
-            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+            return repository.findAllByOrigemAndProspeccaoAndVendedorAndIdCnae(livre, prospeccao, null , cnaeModelo);
         }
     }
+
+//    public List<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+//        final String livre = "LIVRE";
+//        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+//        if (cnae == 0) {
+//            return repository.findAllByOrigem(livre, pageRequest);
+//        } else {
+//            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+//            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+//        }
+//    }
 
     public List<EmpresaModelo> listaPorVendedorFiltroCnae(String email, Integer cnae){
         UsuarioModelo vendedor = new UsuarioModelo();

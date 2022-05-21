@@ -35,6 +35,12 @@ public class UsuarioControlador {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioModelo> login(@RequestBody UsuarioModelo modelo){
+        UsuarioModelo user = service.login(modelo);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> registraUsuario(@RequestBody UsuarioModelo modelo){
         service.registrar(modelo);
