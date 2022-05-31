@@ -18,10 +18,6 @@ jobs:
       - image: cimg/openjdk:11.0
     steps:
       - checkout
-      - run: |
-          chmod +x ./scripts/InstallChrome.sh
-           ./scripts/InstallChrome.sh
-           name: Install Chrome
       - run:
           name: Build
           command: mvn clean package
