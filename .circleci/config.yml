@@ -9,22 +9,18 @@ jobs:
       - run:
           name: Build
           command: mvn clean package
-#      - run:
-#          name: Test
-#          command: mvn test
       - run:
-          command: |
-            echo $(circleci tests glob "test/java/br/sp/fatec/api/dw/DwApplicationTests.java" "test/java/br/sp/fatec/api/dw/servicos/*.java")
-            circleci tests glob "test/java/br/sp/fatec/api/dw/DwApplicationTests.java" "test/java/br/sp/fatec/api/dw/servicos/*.java" | xargs -n 1 echo
+          name: Unit Tests
+          command: mvn -Dtest="dw.servico.**" test
 
   integration-test:
     docker:
       - image: cimg/openjdk:11.0
     steps:
+      - checkout
       - run:
-          command: |
-            echo $(circleci tests glob "test/java/br/sp/fatec/api/dw/integracaoTestes/clientesLivres/*.java" "test/java/br/sp/fatec/api/dw/integracaoTestes/minhaCarteira/*.java")
-            circleci tests glob "test/java/br/sp/fatec/api/dw/integracaoTestes/clientesLivres/*.java" "test/java/br/sp/fatec/api/dw/integracaoTestes/minhaCarteira/*.java" | xargs -n 1 echo
+          name: Integration Tests
+          command: mvn -Dtest="dw.integracaoTestes.**" test
 
   build-deploy:
     machine: true
@@ -55,6 +51,8 @@ workflows:
   integration-test:
     jobs:
       - integration-test:
+          requires:
+            - build-and-test
           filters:
             branches:
               only: feature/SPC-46
