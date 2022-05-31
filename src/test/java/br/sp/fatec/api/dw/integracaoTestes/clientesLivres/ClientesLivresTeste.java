@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
+@SpringBootTest
 public class ClientesLivresTeste {
 
     @Test
@@ -16,7 +18,7 @@ public class ClientesLivresTeste {
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = new ChromeDriver();
 
-        driver.get("http://datawarriorsweb.herokuapp.com/vendorFreeWallets");
+        driver.get("https://datawarriorsweb.herokuapp.com/vendorFreeWallets");
 
         WebElement element = driver.findElementByClassName("title");
 
@@ -32,7 +34,7 @@ public class ClientesLivresTeste {
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = new ChromeDriver();
 
-        driver.get("http://datawarriorsweb.herokuapp.com/vendorFreeWallets");
+        driver.get("https://datawarriorsweb.herokuapp.com/vendorFreeWallets");
 
         WebElement table = driver.findElementById("Grid_content_table");
 

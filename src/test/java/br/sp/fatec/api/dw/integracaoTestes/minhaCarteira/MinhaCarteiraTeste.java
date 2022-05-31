@@ -7,9 +7,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
-
+@SpringBootTest
 public class MinhaCarteiraTeste {
 
     @Test
@@ -18,7 +19,7 @@ public class MinhaCarteiraTeste {
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = new ChromeDriver();
 
-        driver.get("http://datawarriorsweb.herokuapp.com/vendorWallet");
+        driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
 
         WebElement inputBox = driver.findElementByClassName("mdc-text-field__input");
         WebElement searchButton = driver.findElementByClassName("mdc-text-field__icon--leading");
@@ -39,7 +40,7 @@ public class MinhaCarteiraTeste {
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = new ChromeDriver();
 
-        driver.get("http://datawarriorsweb.herokuapp.com/vendorWallet");
+        driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
 
         WebElement table = driver.findElementById("Grid_content_table");
 
@@ -53,7 +54,7 @@ public class MinhaCarteiraTeste {
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = new ChromeDriver();
 
-        driver.get("http://datawarriorsweb.herokuapp.com/vendorWallet");
+        driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
 
         WebElement inputBox = driver.findElementByClassName("mdc-text-field__input");
         WebElement searchButton = driver.findElementByClassName("mdc-text-field__icon--leading");
@@ -72,7 +73,7 @@ public class MinhaCarteiraTeste {
          WebDriverManager.chromedriver().setup();
          ChromeDriver driver = new ChromeDriver();
 
-         driver.get("http://datawarriorsweb.herokuapp.com/vendorWallet");
+         driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
 
          WebElement element = driver.findElementByClassName("title");
 
@@ -88,7 +89,7 @@ public class MinhaCarteiraTeste {
          WebDriverManager.chromedriver().setup();
          ChromeDriver driver = new ChromeDriver();
 
-         driver.get("http://datawarriorsweb.herokuapp.com/vendorWallet");
+         driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
 
          WebElement element = driver.findElementByClassName("title");
 
