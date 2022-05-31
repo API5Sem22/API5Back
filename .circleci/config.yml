@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Build
+          command: mvn clean package
+      - run:
           name: Integration Tests
           command: mvn -Dtest="dw.integracaoTestes.**" test
 
@@ -36,6 +39,13 @@ jobs:
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a datawarriors-back web
 
 workflows:
+  integration-test:
+    jobs:
+      - integration-test:
+          filters:
+            branches:
+              only: feature/SPC-46
+
   build-test: 
     jobs:
       - build-and-test:
@@ -48,11 +58,3 @@ workflows:
           filters:
                 branches:
                   only: main
-  integration-test:
-    jobs:
-      - integration-test:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only: feature/SPC-46
