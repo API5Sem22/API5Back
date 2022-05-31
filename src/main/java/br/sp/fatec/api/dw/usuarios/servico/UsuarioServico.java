@@ -2,18 +2,12 @@ package br.sp.fatec.api.dw.usuarios.servico;
 
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import br.sp.fatec.api.dw.usuarios.repositorio.UsuarioRepository;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import javax.servlet.ServletException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.List;
 
 @Service
@@ -34,8 +28,17 @@ public class UsuarioServico {
         return repository.findByEmail(email);
     }
 
+    public UsuarioModelo login(UsuarioModelo modelo){
+        UsuarioModelo usu = repository.findByEmailAndSenha(modelo.getEmail(), getSHA512(modelo.getSenha()));
+        if(usu != null) {
+            usu.setSenha(null);
+        }
+        return usu;
+    }
+
     public void registrar(UsuarioModelo modelo) {
         try {
+            modelo.setSenha(getSHA512(modelo.getSenha()));
             repository.save(modelo);
         } catch (DataIntegrityViolationException di){
             throw new DataIntegrityViolationException("Restrição de banco de dados violada",di);
@@ -78,5 +81,20 @@ public class UsuarioServico {
         } catch (DataIntegrityViolationException di){
             throw new DataIntegrityViolationException("Restrição de banco de dados violada",di);
         }
+    }
+
+
+    public static String getSHA512(String input){
+        String toReturn = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            digest.reset();
+            digest.update(input.getBytes("utf8"));
+            toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
     }
 }
