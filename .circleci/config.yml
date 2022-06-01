@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.1
+
 jobs:
   build-and-test:
     docker:
@@ -16,8 +19,9 @@ jobs:
   integration-test:
     docker:
       - image: cimg/openjdk:11.0
-      - image: circleci/openjdk:11-jdk-buster-browsers
+      - image: cimg/openjdk:1.14-browsers
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - run:
           name: Download Selenium
