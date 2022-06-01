@@ -16,8 +16,16 @@ jobs:
   integration-test:
     docker:
       - image: cimg/openjdk:11.0
+      - image: cimg/node:16.13.1-browsers
     steps:
       - checkout
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.141.59.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.141.59.jar -log test-reports/selenium.log
+          background: true
       - run:
           name: Build
           command: mvn clean package
