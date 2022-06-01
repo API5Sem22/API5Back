@@ -52,7 +52,7 @@ workflows:
       - integration-test:
           filters:
             branches:
-              only: feature/SPC-46
+              only: develop
 
   build-test: 
     jobs:
