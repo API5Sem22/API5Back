@@ -18,8 +18,7 @@ jobs:
 
   integration-test:
     docker:
-      - image: cimg/openjdk:11.0
-      - image: cimg/openjdk:1.14-browsers
+      - image: cimg/openjdk:11.0.10-browsers
     steps:
       - browser-tools/install-browser-tools
       - checkout
