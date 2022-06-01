@@ -13,27 +13,27 @@ import org.springframework.util.Assert;
 @SpringBootTest
 public class MinhaCarteiraTeste {
 
-    @Test
-    void carteiraSemItems(){
-
-        WebDriverManager.chromedriver().setup();
-        ChromeDriver driver = new ChromeDriver();
-
-        driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
-
-        WebElement inputBox = driver.findElementByClassName("mdc-text-field__input");
-        WebElement searchButton = driver.findElementByClassName("mdc-text-field__icon--leading");
-
-        inputBox.sendKeys("1111111111", Keys.ENTER);
-
-
-        WebElement table = driver.findElementByClassName("e-emptyrow");
-
-
-        Assertions.assertEquals(table.getText(), "No records to display");
-
-        driver.quit();
-    }
+//    @Test
+//    void carteiraSemItems(){
+//
+//        WebDriverManager.chromedriver().setup();
+//        ChromeDriver driver = new ChromeDriver();
+//
+//        driver.get("https://datawarriorsweb.herokuapp.com/vendorWallet");
+//
+//        WebElement inputBox = driver.findElementByClassName("mdc-text-field__input");
+//        WebElement searchButton = driver.findElementByClassName("mdc-text-field__icon--leading");
+//
+//        inputBox.sendKeys("1111111111", Keys.ENTER);
+//
+//
+//        WebElement table = driver.findElementByClassName("e-emptyrow");
+//
+//
+//        Assertions.assertEquals(table.getText(), "No records to display");
+//
+//        driver.quit();
+//    }
 
     @Test
     void buscaTodaMinhaCarteira(){
