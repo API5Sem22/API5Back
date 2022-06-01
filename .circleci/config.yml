@@ -13,19 +13,25 @@ jobs:
           name: Unit Tests
           command: mvn -Dtest="dw.servico.**" test
 
-  integration-test:
+  build-selenium:
     docker:
-      - image: cimg/openjdk:11.0
       - image: cimg/node:16.13.1-browsers
     steps:
       - checkout
+      - run: mkdir test-reports
       - run:
           name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.141.59.jar
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
           name: Start Selenium
-          command: java -jar selenium-server-standalone-3.141.59.jar -log test-reports/selenium.log
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
+
+  integration-test:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
       - run:
           name: Build
           command: mvn clean package
@@ -47,13 +53,18 @@ jobs:
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a datawarriors-back web
 
 workflows:
+  build-selenium:
+    jobs:
+      - build-selenium:
+          filters:
+            branches:
+              only: feature/SPC-46
   integration-test:
     jobs:
       - integration-test:
           filters:
             branches:
               only: feature/SPC-46
-
   build-test: 
     jobs:
       - build-and-test:
