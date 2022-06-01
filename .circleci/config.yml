@@ -24,6 +24,7 @@ jobs:
       - run:
           name: Integration Tests
           command: mvn -Dtest="dw.integracaoTestes.**" test
+          timeout: 100000
 
   build-deploy:
     machine: true
