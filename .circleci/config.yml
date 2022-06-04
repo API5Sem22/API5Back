@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.1
+
 jobs:
   build-and-test:
     docker:
@@ -10,8 +13,26 @@ jobs:
           name: Build
           command: mvn clean package
       - run:
-          name: Test
-          command: mvn test
+          name: Unit Tests
+          command: mvn -Dtest="dw.servico.**" test
+
+  integration-test:
+    docker:
+      - image: cimg/openjdk:11.0.10-browsers
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+      - run:
+          name: Start Selenium Server
+          command: java -jar selenium-server-standalone-3.141.59.jar
+          background: true
+      - run:
+          name: Integration Tests
+          command: mvn -Dtest="dw.integracaoTestes.**" test
+
   build-deploy:
     machine: true
     steps:
@@ -26,6 +47,13 @@ jobs:
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a datawarriors-back web
 
 workflows:
+  integration-test:
+    jobs:
+      - integration-test:
+          filters:
+            branches:
+              only: develop
+
   build-test: 
     jobs:
       - build-and-test:
