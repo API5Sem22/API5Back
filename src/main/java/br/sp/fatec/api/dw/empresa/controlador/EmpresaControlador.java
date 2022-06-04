@@ -34,12 +34,18 @@ public class EmpresaControlador {
         return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
+//    @GetMapping("/livres/{cnae}")
+//    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "30") int size,
+//                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+//                                                           @PathVariable Integer cnae){
+//        Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page, cnae);
+//        return new ResponseEntity<>(empresaModelo.getContent(), HttpStatus.OK);
+//    }
+
     @GetMapping("/livres/{cnae}")
-    public ResponseEntity<List<EmpresaModelo>> listaLivres(@RequestParam(value = "size", defaultValue = "30") int size,
-                                                           @RequestParam(value = "page", defaultValue = "0") int page,
-                                                           @PathVariable Integer cnae){
-        Page<EmpresaModelo> empresaModelo = service.listaLivres(size, page, cnae);
-        return new ResponseEntity<>(empresaModelo.getContent(), HttpStatus.OK);
+    public ResponseEntity<List<EmpresaModelo>> listaLivres(@PathVariable Integer cnae){
+        List<EmpresaModelo> empresaModelo = service.listaLivres(cnae);
+        return new ResponseEntity<>(empresaModelo, HttpStatus.OK);
     }
 
     @PutMapping("/upt")
@@ -56,7 +62,19 @@ public class EmpresaControlador {
 
     @PostMapping("/csv")
     public ResponseEntity<Void> listaEmpresasCsv() throws IOException {
-        service.populateNivelEmpresa();
+        service.populateProspeccaoEmpresa();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/consumo-cnaes")
+    public ResponseEntity<List<String>> listaConsumoCnaes(){
+        List<String> reponse = service.listaConsumoCnaes();
+        return new ResponseEntity<>(reponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/consumo-estados")
+    public ResponseEntity<List<String>> listaConsumoEstados(){
+        List<String> reponse = service.listaConsumoEstados();
+        return new ResponseEntity<>(reponse, HttpStatus.OK);
     }
 }

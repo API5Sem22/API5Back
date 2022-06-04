@@ -4,10 +4,8 @@ import br.sp.fatec.api.dw.empresa.modelo.*;
 import br.sp.fatec.api.dw.empresa.repositorio.*;
 import br.sp.fatec.api.dw.usuarios.modelo.UsuarioModelo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.*;
@@ -38,17 +36,27 @@ public class EmpresaServico {
         return repository.findByCnpj(emp);
     }
 
-
-    public Page<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+    public List<EmpresaModelo> listaLivres(Integer cnae) {
         final String livre = "LIVRE";
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+        final String prospeccao = "SPC";
         if (cnae == 0) {
-            return repository.findAllByOrigem(livre, pageRequest);
+            return repository.findAllByOrigemAndProspeccaoAndVendedor(livre, prospeccao, null);
         } else {
             CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
-            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+            return repository.findAllByOrigemAndProspeccaoAndVendedorAndIdCnae(livre, prospeccao, null , cnaeModelo);
         }
     }
+
+//    public List<EmpresaModelo> listaLivres(int size, int page, Integer cnae) {
+//        final String livre = "LIVRE";
+//        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "origem");
+//        if (cnae == 0) {
+//            return repository.findAllByOrigem(livre, pageRequest);
+//        } else {
+//            CnaeModelo cnaeModelo = repositoryCnae.findByCodigo(cnae);
+//            return repository.findAllByOrigemAndIdCnae(livre, cnaeModelo, pageRequest);
+//        }
+//    }
 
     public List<EmpresaModelo> listaPorVendedorFiltroCnae(String email, Integer cnae){
         UsuarioModelo vendedor = new UsuarioModelo();
@@ -390,5 +398,55 @@ public class EmpresaServico {
                 break;
         }
         buffRead.close();
+    }
+
+    public void populateProspeccaoEmpresa() throws IOException {
+        File file = new File("D:\\AulasEAD-5Sem2022\\API\\BasedeDados\\dados_livres_ok.csv");
+        FileInputStream stream = new FileInputStream(file);
+        BufferedReader lerArq = new BufferedReader(new InputStreamReader(stream));
+        String proLinha = lerArq.readLine();
+
+        int k = 0;
+        while (proLinha != null){
+            if(k == 0){
+                k++;
+                proLinha = lerArq.readLine();
+                continue;
+            }
+            String[] proDados = proLinha.split(";");
+            String cnpj = proDados[0];
+            if(cnpj.length() < 14){
+                int numeroZeros = 14 - cnpj.length();
+                for(int i = 0; i < numeroZeros; i++){
+                    cnpj = "0" + cnpj;
+                }
+            }
+            String prospeccao = proDados[7];
+
+            EmpresaDescModelo desc = repositoryDesc.findByCnpj(cnpj);
+            EmpresaModelo emp = repository.findByCnpj(desc);
+
+            System.out.println("cpnj : " + cnpj +
+                    " - prospeccao : " + prospeccao);
+
+            if (emp != null) {
+                emp.setProspeccao(prospeccao);
+
+                repository.save(emp);
+
+                System.out.println("ATUALIZADO");
+            }
+
+            proLinha = lerArq.readLine();
+        }
+        lerArq.close();
+    }
+
+    public List<String> listaConsumoCnaes(){
+        return repository.findConsumosCnae();
+    }
+
+    public List<String> listaConsumoEstados(){
+        return repository.findConsumosEstados();
     }
 }
