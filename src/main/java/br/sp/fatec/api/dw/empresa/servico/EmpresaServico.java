@@ -441,4 +441,12 @@ public class EmpresaServico {
         }
         lerArq.close();
     }
+
+    public List<String> listaConsumoCnaes(){
+        return repository.findConsumosCnae();
+    }
+
+    public List<String> listaConsumoEstados(){
+        return repository.findConsumosEstados();
+    }
 }
