@@ -65,4 +65,16 @@ public class EmpresaControlador {
         service.populateProspeccaoEmpresa();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/consumo-cnaes")
+    public ResponseEntity<List<String>> listaConsumoCnaes(){
+        List<String> reponse = service.listaConsumoCnaes();
+        return new ResponseEntity<>(reponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/consumo-estados")
+    public ResponseEntity<List<String>> listaConsumoEstados(){
+        List<String> reponse = service.listaConsumoEstados();
+        return new ResponseEntity<>(reponse, HttpStatus.OK);
+    }
 }
